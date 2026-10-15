@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as MainExploreRouteImport } from './routes/_main.explore'
 import { Route as MainHomeRouteImport } from './routes/_main.home'
+import { Route as MainJournalRouteImport } from './routes/_main.journal'
 import { Route as MainRecommendationsRouteImport } from './routes/_main.recommendations'
 import { Route as MainWisdomRouteImport } from './routes/_main.wisdom'
 import { Route as PlayIdRouteImport } from './routes/play.$id'
@@ -36,6 +37,11 @@ const MainExploreRoute = MainExploreRouteImport.update({
 const MainHomeRoute = MainHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainJournalRoute = MainJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => MainRoute,
 } as any)
 const MainRecommendationsRoute = MainRecommendationsRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
+  '/journal': typeof MainJournalRoute
   '/recommendations': typeof MainRecommendationsRoute
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
+  '/journal': typeof MainJournalRoute
   '/recommendations': typeof MainRecommendationsRoute
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/_main/explore': typeof MainExploreRoute
   '/_main/home': typeof MainHomeRoute
+  '/_main/journal': typeof MainJournalRoute
   '/_main/recommendations': typeof MainRecommendationsRoute
   '/_main/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
     | '/'
     | '/explore'
     | '/home'
+    | '/journal'
     | '/recommendations'
     | '/wisdom'
     | '/play/$id'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/explore'
     | '/home'
+    | '/journal'
     | '/recommendations'
     | '/wisdom'
     | '/play/$id'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/_main'
     | '/_main/explore'
     | '/_main/home'
+    | '/_main/journal'
     | '/_main/recommendations'
     | '/_main/wisdom'
     | '/play/$id'
@@ -166,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainHomeRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/journal': {
+      id: '/_main/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof MainJournalRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/recommendations': {
       id: '/_main/recommendations'
       path: '/recommendations'
@@ -207,6 +226,7 @@ declare module '@tanstack/react-router' {
 interface MainRouteChildren {
   MainExploreRoute: typeof MainExploreRoute
   MainHomeRoute: typeof MainHomeRoute
+  MainJournalRoute: typeof MainJournalRoute
   MainRecommendationsRoute: typeof MainRecommendationsRoute
   MainWisdomRoute: typeof MainWisdomRoute
   MainMeditationIdRoute: typeof MainMeditationIdRoute
@@ -216,6 +236,7 @@ interface MainRouteChildren {
 const MainRouteChildren: MainRouteChildren = {
   MainExploreRoute: MainExploreRoute,
   MainHomeRoute: MainHomeRoute,
+  MainJournalRoute: MainJournalRoute,
   MainRecommendationsRoute: MainRecommendationsRoute,
   MainWisdomRoute: MainWisdomRoute,
   MainMeditationIdRoute: MainMeditationIdRoute,

@@ -1,5 +1,5 @@
 import { Annoyed, Frown, Laugh, Meh, Smile, type LucideIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export function JournalEditor({ open, onOpenChange, initial, onSave }: { open: b
     }
   }, [open, initial]);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: FormEvent) => {
     e.preventDefault();
     const err: typeof errors = {};
     if (!d.title.trim()) err.title = "Please add a title.";
