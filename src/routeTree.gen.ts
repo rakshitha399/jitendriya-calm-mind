@@ -14,7 +14,9 @@ import { Route as MainRouteImport } from './routes/_main'
 import { Route as MainExploreRouteImport } from './routes/_main.explore'
 import { Route as MainHomeRouteImport } from './routes/_main.home'
 import { Route as MainJournalRouteImport } from './routes/_main.journal'
+import { Route as MainProfileRouteImport } from './routes/_main.profile'
 import { Route as MainRecommendationsRouteImport } from './routes/_main.recommendations'
+import { Route as MainSettingsRouteImport } from './routes/_main.settings'
 import { Route as MainWisdomRouteImport } from './routes/_main.wisdom'
 import { Route as PlayIdRouteImport } from './routes/play.$id'
 import { Route as MainMeditationIndexRouteImport } from './routes/_main.meditation.index'
@@ -44,9 +46,19 @@ const MainJournalRoute = MainJournalRouteImport.update({
   path: '/journal',
   getParentRoute: () => MainRoute,
 } as any)
+const MainProfileRoute = MainProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainRecommendationsRoute = MainRecommendationsRouteImport.update({
   id: '/recommendations',
   path: '/recommendations',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainSettingsRoute = MainSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => MainRoute,
 } as any)
 const MainWisdomRoute = MainWisdomRouteImport.update({
@@ -75,7 +87,9 @@ export interface FileRoutesByFullPath {
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
   '/journal': typeof MainJournalRoute
+  '/profile': typeof MainProfileRoute
   '/recommendations': typeof MainRecommendationsRoute
+  '/settings': typeof MainSettingsRoute
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
@@ -86,7 +100,9 @@ export interface FileRoutesByTo {
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
   '/journal': typeof MainJournalRoute
+  '/profile': typeof MainProfileRoute
   '/recommendations': typeof MainRecommendationsRoute
+  '/settings': typeof MainSettingsRoute
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
@@ -99,7 +115,9 @@ export interface FileRoutesById {
   '/_main/explore': typeof MainExploreRoute
   '/_main/home': typeof MainHomeRoute
   '/_main/journal': typeof MainJournalRoute
+  '/_main/profile': typeof MainProfileRoute
   '/_main/recommendations': typeof MainRecommendationsRoute
+  '/_main/settings': typeof MainSettingsRoute
   '/_main/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/_main/meditation/$id': typeof MainMeditationIdRoute
@@ -112,7 +130,9 @@ export interface FileRouteTypes {
     | '/explore'
     | '/home'
     | '/journal'
+    | '/profile'
     | '/recommendations'
+    | '/settings'
     | '/wisdom'
     | '/play/$id'
     | '/meditation/$id'
@@ -123,7 +143,9 @@ export interface FileRouteTypes {
     | '/explore'
     | '/home'
     | '/journal'
+    | '/profile'
     | '/recommendations'
+    | '/settings'
     | '/wisdom'
     | '/play/$id'
     | '/meditation/$id'
@@ -135,7 +157,9 @@ export interface FileRouteTypes {
     | '/_main/explore'
     | '/_main/home'
     | '/_main/journal'
+    | '/_main/profile'
     | '/_main/recommendations'
+    | '/_main/settings'
     | '/_main/wisdom'
     | '/play/$id'
     | '/_main/meditation/$id'
@@ -185,11 +209,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainJournalRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/profile': {
+      id: '/_main/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof MainProfileRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/recommendations': {
       id: '/_main/recommendations'
       path: '/recommendations'
       fullPath: '/recommendations'
       preLoaderRoute: typeof MainRecommendationsRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/settings': {
+      id: '/_main/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof MainSettingsRouteImport
       parentRoute: typeof MainRoute
     }
     '/_main/wisdom': {
@@ -227,7 +265,9 @@ interface MainRouteChildren {
   MainExploreRoute: typeof MainExploreRoute
   MainHomeRoute: typeof MainHomeRoute
   MainJournalRoute: typeof MainJournalRoute
+  MainProfileRoute: typeof MainProfileRoute
   MainRecommendationsRoute: typeof MainRecommendationsRoute
+  MainSettingsRoute: typeof MainSettingsRoute
   MainWisdomRoute: typeof MainWisdomRoute
   MainMeditationIdRoute: typeof MainMeditationIdRoute
   MainMeditationIndexRoute: typeof MainMeditationIndexRoute
@@ -237,7 +277,9 @@ const MainRouteChildren: MainRouteChildren = {
   MainExploreRoute: MainExploreRoute,
   MainHomeRoute: MainHomeRoute,
   MainJournalRoute: MainJournalRoute,
+  MainProfileRoute: MainProfileRoute,
   MainRecommendationsRoute: MainRecommendationsRoute,
+  MainSettingsRoute: MainSettingsRoute,
   MainWisdomRoute: MainWisdomRoute,
   MainMeditationIdRoute: MainMeditationIdRoute,
   MainMeditationIndexRoute: MainMeditationIndexRoute,

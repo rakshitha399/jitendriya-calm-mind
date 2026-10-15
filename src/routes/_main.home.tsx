@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ProgressRing, SampleBadge, SectionHeading } from "@/components/common/ui";
 import { Button } from "@/components/ui/button";
 import { getSession, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
-import { profileStore, useStore } from "@/lib/store";
+import { profileStore, settingsStore, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_main/home")({
   head: () => ({
@@ -32,6 +32,7 @@ function greeting() {
 
 function Home() {
   const profile = useStore(profileStore);
+  const { dailyQuote } = useStore(settingsStore);
   const quote = quoteForDate(new Date());
   const rec = getSession("mindful-breathing")!;
   const [promptIdx, setPromptIdx] = useState(0);
@@ -43,9 +44,9 @@ function Home() {
         <h1 className="mt-1 flex items-center gap-2 text-5xl">
           {profile.name} <Sprout className="h-7 w-7 text-sage" aria-hidden />
         </h1>
-        <blockquote className="mt-4 max-w-xl font-serif text-xl italic text-muted-foreground">
+        {dailyQuote && (<blockquote className="mt-4 max-w-xl font-serif text-xl italic text-muted-foreground">
           “{quote.text}”
-        </blockquote>
+        </blockquote>)}
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
