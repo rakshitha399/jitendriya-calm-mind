@@ -10,33 +10,166 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MainRouteImport } from './routes/_main'
+import { Route as MainExploreRouteImport } from './routes/_main.explore'
+import { Route as MainHomeRouteImport } from './routes/_main.home'
+import { Route as MainJournalRouteImport } from './routes/_main.journal'
+import { Route as MainProfileRouteImport } from './routes/_main.profile'
+import { Route as MainRecommendationsRouteImport } from './routes/_main.recommendations'
+import { Route as MainSettingsRouteImport } from './routes/_main.settings'
+import { Route as MainWisdomRouteImport } from './routes/_main.wisdom'
+import { Route as PlayIdRouteImport } from './routes/play.$id'
+import { Route as MainMeditationIndexRouteImport } from './routes/_main.meditation.index'
+import { Route as MainMeditationIdRouteImport } from './routes/_main.meditation.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainRoute = MainRouteImport.update({
+  id: '/_main',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainExploreRoute = MainExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainHomeRoute = MainHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainJournalRoute = MainJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainProfileRoute = MainProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainRecommendationsRoute = MainRecommendationsRouteImport.update({
+  id: '/recommendations',
+  path: '/recommendations',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainSettingsRoute = MainSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainWisdomRoute = MainWisdomRouteImport.update({
+  id: '/wisdom',
+  path: '/wisdom',
+  getParentRoute: () => MainRoute,
+} as any)
+const PlayIdRoute = PlayIdRouteImport.update({
+  id: '/play/$id',
+  path: '/play/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainMeditationIndexRoute = MainMeditationIndexRouteImport.update({
+  id: '/meditation/',
+  path: '/meditation/',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMeditationIdRoute = MainMeditationIdRouteImport.update({
+  id: '/meditation/$id',
+  path: '/meditation/$id',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/explore': typeof MainExploreRoute
+  '/home': typeof MainHomeRoute
+  '/journal': typeof MainJournalRoute
+  '/profile': typeof MainProfileRoute
+  '/recommendations': typeof MainRecommendationsRoute
+  '/settings': typeof MainSettingsRoute
+  '/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
+  '/meditation/$id': typeof MainMeditationIdRoute
+  '/meditation/': typeof MainMeditationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/explore': typeof MainExploreRoute
+  '/home': typeof MainHomeRoute
+  '/journal': typeof MainJournalRoute
+  '/profile': typeof MainProfileRoute
+  '/recommendations': typeof MainRecommendationsRoute
+  '/settings': typeof MainSettingsRoute
+  '/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
+  '/meditation/$id': typeof MainMeditationIdRoute
+  '/meditation': typeof MainMeditationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_main': typeof MainRouteWithChildren
+  '/_main/explore': typeof MainExploreRoute
+  '/_main/home': typeof MainHomeRoute
+  '/_main/journal': typeof MainJournalRoute
+  '/_main/profile': typeof MainProfileRoute
+  '/_main/recommendations': typeof MainRecommendationsRoute
+  '/_main/settings': typeof MainSettingsRoute
+  '/_main/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
+  '/_main/meditation/$id': typeof MainMeditationIdRoute
+  '/_main/meditation/': typeof MainMeditationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/explore'
+    | '/home'
+    | '/journal'
+    | '/profile'
+    | '/recommendations'
+    | '/settings'
+    | '/wisdom'
+    | '/play/$id'
+    | '/meditation/$id'
+    | '/meditation/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/explore'
+    | '/home'
+    | '/journal'
+    | '/profile'
+    | '/recommendations'
+    | '/settings'
+    | '/wisdom'
+    | '/play/$id'
+    | '/meditation/$id'
+    | '/meditation'
+  id:
+    | '__root__'
+    | '/'
+    | '/_main'
+    | '/_main/explore'
+    | '/_main/home'
+    | '/_main/journal'
+    | '/_main/profile'
+    | '/_main/recommendations'
+    | '/_main/settings'
+    | '/_main/wisdom'
+    | '/play/$id'
+    | '/_main/meditation/$id'
+    | '/_main/meditation/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MainRoute: typeof MainRouteWithChildren
+  PlayIdRoute: typeof PlayIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +181,116 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof MainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_main/explore': {
+      id: '/_main/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof MainExploreRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/home': {
+      id: '/_main/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof MainHomeRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/journal': {
+      id: '/_main/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof MainJournalRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/profile': {
+      id: '/_main/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof MainProfileRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/recommendations': {
+      id: '/_main/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof MainRecommendationsRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/settings': {
+      id: '/_main/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof MainSettingsRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/wisdom': {
+      id: '/_main/wisdom'
+      path: '/wisdom'
+      fullPath: '/wisdom'
+      preLoaderRoute: typeof MainWisdomRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/play/$id': {
+      id: '/play/$id'
+      path: '/play/$id'
+      fullPath: '/play/$id'
+      preLoaderRoute: typeof PlayIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_main/meditation/': {
+      id: '/_main/meditation/'
+      path: '/meditation'
+      fullPath: '/meditation/'
+      preLoaderRoute: typeof MainMeditationIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/meditation/$id': {
+      id: '/_main/meditation/$id'
+      path: '/meditation/$id'
+      fullPath: '/meditation/$id'
+      preLoaderRoute: typeof MainMeditationIdRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
+interface MainRouteChildren {
+  MainExploreRoute: typeof MainExploreRoute
+  MainHomeRoute: typeof MainHomeRoute
+  MainJournalRoute: typeof MainJournalRoute
+  MainProfileRoute: typeof MainProfileRoute
+  MainRecommendationsRoute: typeof MainRecommendationsRoute
+  MainSettingsRoute: typeof MainSettingsRoute
+  MainWisdomRoute: typeof MainWisdomRoute
+  MainMeditationIdRoute: typeof MainMeditationIdRoute
+  MainMeditationIndexRoute: typeof MainMeditationIndexRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainExploreRoute: MainExploreRoute,
+  MainHomeRoute: MainHomeRoute,
+  MainJournalRoute: MainJournalRoute,
+  MainProfileRoute: MainProfileRoute,
+  MainRecommendationsRoute: MainRecommendationsRoute,
+  MainSettingsRoute: MainSettingsRoute,
+  MainWisdomRoute: MainWisdomRoute,
+  MainMeditationIdRoute: MainMeditationIdRoute,
+  MainMeditationIndexRoute: MainMeditationIndexRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MainRoute: MainRouteWithChildren,
+  PlayIdRoute: PlayIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
