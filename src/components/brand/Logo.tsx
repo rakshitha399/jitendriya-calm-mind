@@ -14,13 +14,19 @@ export function LotusMark({ className }: { className?: string }) {
 }
 
 export function Logo({ className, showTagline = false }: { className?: string; showTagline?: boolean }) {
-  return (
-    <div className={cn("flex items-center gap-2.5", className)}>
+  const brand = (
+    <div className="flex items-center gap-2.5">
       <LotusMark className="shrink-0 text-gold" />
-      <div className="min-w-0 leading-none">
-        <span className="font-serif text-2xl font-semibold tracking-tight">Jitendriya</span>
-        {showTagline && <p className="mt-1 text-[11px] tracking-wide opacity-80">Calm Mind • Balanced Life • Higher You</p>}
-      </div>
+      <span className="font-serif text-2xl font-semibold leading-none tracking-tight">Jitendriya</span>
+    </div>
+  );
+  if (!showTagline) return <div className={cn("flex items-center", className)}>{brand}</div>;
+  return (
+    <div className={cn("flex flex-col items-center text-center", className)}>
+      {brand}
+      <p className="mt-2 max-w-full text-[10.5px] leading-snug tracking-wide opacity-80 lg:whitespace-nowrap">
+        Calm Mind • Balanced Life • Higher You
+      </p>
     </div>
   );
 }
