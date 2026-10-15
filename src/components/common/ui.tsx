@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Clock, Signal } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { categoryLabels, type Session } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -104,7 +104,7 @@ export function EmptyState({ icon, title, description, action }: { icon: ReactNo
   );
 }
 
-export function Chip({ active, onClick, children, ...rest }: { active: boolean; onClick: () => void; children: ReactNode } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">) {
+export function Chip({ active, onClick, children, ...rest }: { active: boolean; onClick: () => void; children: ReactNode } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick">) {
   return (
     <button
       type="button"
