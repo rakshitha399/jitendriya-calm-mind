@@ -19,6 +19,7 @@ import { Route as MainRecommendationsRouteImport } from './routes/_main.recommen
 import { Route as MainSettingsRouteImport } from './routes/_main.settings'
 import { Route as MainWisdomRouteImport } from './routes/_main.wisdom'
 import { Route as PlayIdRouteImport } from './routes/play.$id'
+import { Route as MainChantingIndexRouteImport } from './routes/_main.chanting.index'
 import { Route as MainMeditationIndexRouteImport } from './routes/_main.meditation.index'
 import { Route as MainMeditationIdRouteImport } from './routes/_main.meditation.$id'
 
@@ -71,6 +72,11 @@ const PlayIdRoute = PlayIdRouteImport.update({
   path: '/play/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainChantingIndexRoute = MainChantingIndexRouteImport.update({
+  id: '/chanting/',
+  path: '/chanting/',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainMeditationIndexRoute = MainMeditationIndexRouteImport.update({
   id: '/meditation/',
   path: '/meditation/',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
+  '/chanting/': typeof MainChantingIndexRoute
   '/meditation/': typeof MainMeditationIndexRoute
 }
 export interface FileRoutesByTo {
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
+  '/chanting': typeof MainChantingIndexRoute
   '/meditation': typeof MainMeditationIndexRoute
 }
 export interface FileRoutesById {
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/_main/wisdom': typeof MainWisdomRoute
   '/play/$id': typeof PlayIdRoute
   '/_main/meditation/$id': typeof MainMeditationIdRoute
+  '/_main/chanting/': typeof MainChantingIndexRoute
   '/_main/meditation/': typeof MainMeditationIndexRoute
 }
 export interface FileRouteTypes {
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/wisdom'
     | '/play/$id'
     | '/meditation/$id'
+    | '/chanting/'
     | '/meditation/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/wisdom'
     | '/play/$id'
     | '/meditation/$id'
+    | '/chanting'
     | '/meditation'
   id:
     | '__root__'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/_main/wisdom'
     | '/play/$id'
     | '/_main/meditation/$id'
+    | '/_main/chanting/'
     | '/_main/meditation/'
   fileRoutesById: FileRoutesById
 }
@@ -244,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main/chanting/': {
+      id: '/_main/chanting/'
+      path: '/chanting'
+      fullPath: '/chanting/'
+      preLoaderRoute: typeof MainChantingIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/meditation/': {
       id: '/_main/meditation/'
       path: '/meditation'
@@ -270,6 +289,7 @@ interface MainRouteChildren {
   MainSettingsRoute: typeof MainSettingsRoute
   MainWisdomRoute: typeof MainWisdomRoute
   MainMeditationIdRoute: typeof MainMeditationIdRoute
+  MainChantingIndexRoute: typeof MainChantingIndexRoute
   MainMeditationIndexRoute: typeof MainMeditationIndexRoute
 }
 
@@ -282,6 +302,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainSettingsRoute: MainSettingsRoute,
   MainWisdomRoute: MainWisdomRoute,
   MainMeditationIdRoute: MainMeditationIdRoute,
+  MainChantingIndexRoute: MainChantingIndexRoute,
   MainMeditationIndexRoute: MainMeditationIndexRoute,
 }
 
