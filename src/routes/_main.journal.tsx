@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { journalCategories, journalRepo, journalStore, useStore, type JournalEntry } from "@/lib/store";
 
 export const Route = createFileRoute("/_main/journal")({
-  validateSearch: (s: Record<string, unknown>): { new?: boolean } => ({ new: s.new === true || s.new === "true" ? true : undefined }),
+  validateSearch: (s: Record<string, unknown>): { new?: boolean | undefined } => ({ new: s["new"] === true || s["new"] === "true" ? true : undefined }),
   head: () => ({
     meta: [
       { title: "My Journal — Jitendriya" },
@@ -86,7 +86,7 @@ function Journal() {
       ) : (
         <ul className="grid gap-4 lg:grid-cols-2">
           {list.map((e) => {
-            const m = moods.find((x) => x.id === e.mood) ?? moods[2];
+            const m = moods.find((x) => x.id === e.mood) ?? moods[2]!;
             const Icon = m.icon;
             return (
               <li key={e.id} className="surface-card grid grid-cols-[auto_minmax(0,1fr)] gap-4 p-5">

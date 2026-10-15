@@ -188,7 +188,7 @@ export const quotes = [
 /** Deterministic "quote of the day" so it doesn't change on every render. */
 export const quoteForDate = (d: Date) => {
   const day = Math.floor(d.getTime() / 86_400_000);
-  return quotes[day % quotes.length];
+  return quotes[day % quotes.length]!;
 };
 
 export const reflectionPrompts = [

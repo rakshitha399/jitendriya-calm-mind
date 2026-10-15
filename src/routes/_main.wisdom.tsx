@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_main/wisdom")({
 
 function Wisdom() {
   const [i, setI] = useState(() => Math.floor(Date.now() / 86_400_000) % quotes.length);
-  const q = quotes[i];
+  const q = quotes[i]!;
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(`“${q.text}”`);

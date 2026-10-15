@@ -11,8 +11,8 @@ const filters = ["all", "meditation", "mantras", "breathing", "relaxation"] as c
 type Filter = (typeof filters)[number];
 
 export const Route = createFileRoute("/_main/recommendations")({
-  validateSearch: (s: Record<string, unknown>): { filter?: Filter } => ({
-    filter: filters.includes(s.filter as Filter) ? (s.filter as Filter) : undefined,
+  validateSearch: (s: Record<string, unknown>): { filter?: Filter | undefined } => ({
+    filter: filters.includes(s["filter"] as Filter) ? (s["filter"] as Filter) : undefined,
   }),
   head: () => ({
     meta: [

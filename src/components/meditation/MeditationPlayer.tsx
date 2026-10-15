@@ -106,7 +106,7 @@ export function MeditationPlayer({ session }: { session: Session }) {
           <button type="button" aria-label={volume ? "Mute" : "Unmute"} onClick={() => setVolume((v) => (v ? 0 : 0.7))} className="rounded-full p-1">
             {volume ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
           </button>
-          <Slider aria-label="Volume" value={[volume * 100]} max={100} step={1} onValueChange={([v]) => setVolume(v / 100)} />
+          <Slider aria-label="Volume" value={[volume * 100]} max={100} step={1} onValueChange={([v]) => setVolume((v ?? 0) / 100)} />
         </div>
       )}
     </div>

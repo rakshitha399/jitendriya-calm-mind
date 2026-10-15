@@ -44,7 +44,7 @@ export function Meta({ session }: { session: Session }) {
   );
 }
 
-export function SessionCard({ session, reasons, layout = "row" }: { session: Session; reasons?: string[]; layout?: "row" | "tile" }) {
+export function SessionCard({ session, reasons, layout = "row" }: { session: Session; reasons?: string[] | undefined; layout?: "row" | "tile" }) {
   if (layout === "tile") {
     return (
       <Link to="/meditation/$id" params={{ id: session.id }} className="group surface-card lift block overflow-hidden">
