@@ -15,6 +15,7 @@ import { Route as MainExploreRouteImport } from './routes/_main.explore'
 import { Route as MainHomeRouteImport } from './routes/_main.home'
 import { Route as MainRecommendationsRouteImport } from './routes/_main.recommendations'
 import { Route as MainWisdomRouteImport } from './routes/_main.wisdom'
+import { Route as PlayIdRouteImport } from './routes/play.$id'
 import { Route as MainMeditationIndexRouteImport } from './routes/_main.meditation.index'
 import { Route as MainMeditationIdRouteImport } from './routes/_main.meditation.$id'
 
@@ -47,6 +48,11 @@ const MainWisdomRoute = MainWisdomRouteImport.update({
   path: '/wisdom',
   getParentRoute: () => MainRoute,
 } as any)
+const PlayIdRoute = PlayIdRouteImport.update({
+  id: '/play/$id',
+  path: '/play/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MainMeditationIndexRoute = MainMeditationIndexRouteImport.update({
   id: '/meditation/',
   path: '/meditation/',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof MainHomeRoute
   '/recommendations': typeof MainRecommendationsRoute
   '/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
   '/meditation/': typeof MainMeditationIndexRoute
 }
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/home': typeof MainHomeRoute
   '/recommendations': typeof MainRecommendationsRoute
   '/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
   '/meditation/$id': typeof MainMeditationIdRoute
   '/meditation': typeof MainMeditationIndexRoute
 }
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/_main/home': typeof MainHomeRoute
   '/_main/recommendations': typeof MainRecommendationsRoute
   '/_main/wisdom': typeof MainWisdomRoute
+  '/play/$id': typeof PlayIdRoute
   '/_main/meditation/$id': typeof MainMeditationIdRoute
   '/_main/meditation/': typeof MainMeditationIndexRoute
 }
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/recommendations'
     | '/wisdom'
+    | '/play/$id'
     | '/meditation/$id'
     | '/meditation/'
   fileRoutesByTo: FileRoutesByTo
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/recommendations'
     | '/wisdom'
+    | '/play/$id'
     | '/meditation/$id'
     | '/meditation'
   id:
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/_main/home'
     | '/_main/recommendations'
     | '/_main/wisdom'
+    | '/play/$id'
     | '/_main/meditation/$id'
     | '/_main/meditation/'
   fileRoutesById: FileRoutesById
@@ -121,6 +133,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MainRoute: typeof MainRouteWithChildren
+  PlayIdRoute: typeof PlayIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainWisdomRouteImport
       parentRoute: typeof MainRoute
     }
+    '/play/$id': {
+      id: '/play/$id'
+      path: '/play/$id'
+      fullPath: '/play/$id'
+      preLoaderRoute: typeof PlayIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_main/meditation/': {
       id: '/_main/meditation/'
       path: '/meditation'
@@ -207,6 +227,7 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MainRoute: MainRouteWithChildren,
+  PlayIdRoute: PlayIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
