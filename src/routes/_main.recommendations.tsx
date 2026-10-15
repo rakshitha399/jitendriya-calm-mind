@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Info, RotateCcw, SearchX, SlidersHorizontal } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Chip, EmptyState, PageHeader, SessionCard } from "@/components/common/ui";
 import { Button } from "@/components/ui/button";
 import { categoryLabels, goalOptions, moodOptions, sessions, type Category } from "@/lib/content";
@@ -99,7 +99,7 @@ function Recommendations() {
   );
 }
 
-function PrefGroup({ label, children }: { label: string; children: React.ReactNode }) {
+function PrefGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <fieldset>
       <legend className="mb-2 text-sm font-semibold">{label}</legend>
