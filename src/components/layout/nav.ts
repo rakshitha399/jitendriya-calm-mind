@@ -1,4 +1,4 @@
-import { BookOpen, Compass, Flower2, Home, Repeat, Settings, User } from "lucide-react";
+import { BookOpen, Compass, Flower2, Home, MessageCircle, Repeat, Settings, User } from "lucide-react";
 
 export const navItems = [
   { to: "/home", label: "Home", icon: Home },
@@ -7,5 +7,6 @@ export const navItems = [
   { to: "/journal", label: "My Journal", short: "Journal", icon: BookOpen },
   { to: "/profile", label: "My Profile", short: "Profile", icon: User },
   { to: "/chanting", label: "Japa Counter", short: "Japa", icon: Repeat },
+  { to: "/assistant", label: "Ask Jitendriya", short: "Ask", icon: MessageCircle },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
