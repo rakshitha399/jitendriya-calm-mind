@@ -188,7 +188,7 @@ function ChantingPage() {
             aria-label={`Count one chant. ${s.count} of ${s.target}`}
             className="grid aspect-square w-full max-w-[280px] place-items-center rounded-full border-4 border-gold/60 bg-primary text-primary-foreground shadow-lg transition-transform active:scale-[0.97] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-4 disabled:opacity-80 motion-reduce:transition-none">
             <span>
-              <span className="block font-display text-7xl tabular-nums" aria-live="polite">{s.count}</span>
+              <span className="block font-serif text-7xl tabular-nums" aria-live="polite">{s.count}</span>
               <span className="mt-1 block text-sm opacity-85">of {s.target.toLocaleString()} · tap to chant</span>
             </span>
           </button>
