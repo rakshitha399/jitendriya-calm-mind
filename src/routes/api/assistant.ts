@@ -8,7 +8,7 @@ export const Route = createFileRoute("/api/assistant")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env.LOVABLE_API_KEY;
+        const apiKey = process.env["LOVABLE_API_KEY"];
         if (!apiKey) return json(500, "The assistant is not configured yet.");
         let messages: UIMessage[];
         try {
