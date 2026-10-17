@@ -129,6 +129,38 @@ export const recordSession = (minutes: number) =>
     minutesPracticed: a.minutesPracticed + Math.round(minutes),
   }));
 
+/* ---------- Wellbeing journey (check-in, completions) ---------- */
+import type { Mood } from "./content";
+import type { DurationPref } from "./recommend";
+
+export interface JourneyPrefs {
+  /** yyyy-mm-dd of the last daily check-in. */
+  checkInDate: string | null;
+  mood: Mood | null;
+  goal: Goal | null;
+  duration: DurationPref;
+}
+export const journeyStore = createStore<JourneyPrefs>("jitendriya.journey.v1", {
+  checkInDate: null,
+  mood: null,
+  goal: null,
+  duration: "any",
+});
+
+export const todayKey = () => new Date().toISOString().slice(0, 10);
+
+export interface Completion {
+  id: string;
+  sessionId: string;
+  title: string;
+  durationMin: number;
+  completedAt: number;
+  moodAfter: Mood | null;
+}
+export const completionsStore = createStore<Completion[]>("jitendriya.completions.v1", []);
+export const recordCompletion = (c: Omit<Completion, "id" | "completedAt">) =>
+  completionsStore.set((l) => [{ ...c, id: crypto.randomUUID(), completedAt: Date.now() }, ...l]);
+
 /* ---------- Settings ---------- */
 export interface Settings {
   theme: "light" | "dark" | "system";
