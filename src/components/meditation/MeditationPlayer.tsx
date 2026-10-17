@@ -5,8 +5,8 @@ import { LotusMark } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { fmt, useCountdown } from "@/hooks/use-countdown";
-import type { Session } from "@/lib/content";
-import { recordSession } from "@/lib/store";
+import { moodOptions, type Mood, type Session } from "@/lib/content";
+import { recordCompletion, recordSession } from "@/lib/store";
 
 const SKIP = 15;
 
@@ -19,10 +19,20 @@ export function MeditationPlayer({ session }: { session: Session }) {
   const [audioError, setAudioError] = useState(false);
   const hasAudio = Boolean(session.audioUrl) && !audioError;
 
+  const [moodAfter, setMoodAfter] = useState<Mood | null>(null);
+  const [saved, setSaved] = useState(false);
+
   const t = useCountdown(total, () => {
     setComplete(true);
     recordSession(session.durationMin);
   });
+
+  const saveCompletion = (mood: Mood | null) => {
+    if (saved) return;
+    setSaved(true);
+    setMoodAfter(mood);
+    recordCompletion({ sessionId: session.id, title: session.title, durationMin: session.durationMin, moodAfter: mood });
+  };
 
   useEffect(() => {
     const a = audioRef.current;
