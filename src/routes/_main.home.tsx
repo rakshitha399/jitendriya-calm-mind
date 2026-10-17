@@ -51,6 +51,32 @@ function Home() {
         </blockquote>)}
       </section>
 
+      <section className="surface-card p-6" aria-labelledby="checkin">
+        <div className="flex items-center justify-between gap-3">
+          <h2 id="checkin" className="text-2xl">How do you feel today?</h2>
+          {checkedInToday && <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">Checked in</span>}
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6" role="group" aria-label="Select your mood">
+          {moodOptions.map((m) => {
+            const active = checkedInToday && journey.mood === m.id;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => journeyStore.set((j) => ({ ...j, checkInDate: todayKey(), mood: m.id }))}
+                className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-colors ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:bg-accent"}`}
+              >
+                {m.label}
+              </button>
+            );
+          })}
+        </div>
+        <Button asChild variant="outline" className="mt-4">
+          <Link to="/recommendations"><Sparkles /> See practices for your mood</Link>
+        </Button>
+      </section>
+
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <section className="surface-card p-6" aria-labelledby="wellness">
           <div className="flex items-center justify-between gap-3">
