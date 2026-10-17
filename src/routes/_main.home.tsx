@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, ChevronRight, Compass, Flower2, Play, ScrollText, Sprout } from "lucide-react";
+import { BookOpen, ChevronRight, Compass, Flower2, Play, ScrollText, Sparkles, Sprout } from "lucide-react";
 import { useState } from "react";
 import { ProgressRing, SampleBadge, SectionHeading } from "@/components/common/ui";
 import { Button } from "@/components/ui/button";
-import { getSession, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
-import { profileStore, settingsStore, useStore } from "@/lib/store";
+import { getSession, moodOptions, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
+import { journeyStore, profileStore, settingsStore, todayKey, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_main/home")({
   head: () => ({
@@ -33,6 +33,8 @@ function greeting() {
 function Home() {
   const profile = useStore(profileStore);
   const { dailyQuote } = useStore(settingsStore);
+  const journey = useStore(journeyStore);
+  const checkedInToday = journey.checkInDate === todayKey();
   const quote = quoteForDate(new Date());
   const rec = getSession("mindful-breathing")!;
   const [promptIdx, setPromptIdx] = useState(0);
