@@ -85,7 +85,7 @@ export function MeditationPlayer({ session }: { session: Session }) {
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild><Link to="/journal" search={{ new: true }}><BookOpen /> Reflect in journal</Link></Button>
-          <Button variant="outline" onClick={() => { setComplete(false); t.restart(); }}><Undo2 /> Again</Button>
+          <Button variant="outline" onClick={() => { setComplete(false); setMoodAfter(null); completionIdRef.current = null; t.restart(); }}><Undo2 /> Again</Button>
           <Button asChild variant="ghost"><Link to="/home">Back home</Link></Button>
         </div>
       </div>
