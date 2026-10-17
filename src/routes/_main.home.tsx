@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, ChevronRight, Compass, Flower2, Play, ScrollText, Sprout } from "lucide-react";
+import { BookOpen, ChevronRight, Compass, Flower2, Play, ScrollText, Sparkles, Sprout } from "lucide-react";
 import { useState } from "react";
 import { ProgressRing, SampleBadge, SectionHeading } from "@/components/common/ui";
 import { Button } from "@/components/ui/button";
-import { getSession, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
-import { profileStore, settingsStore, useStore } from "@/lib/store";
+import { getSession, moodOptions, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
+import { journeyStore, profileStore, settingsStore, todayKey, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_main/home")({
   head: () => ({
@@ -33,6 +33,8 @@ function greeting() {
 function Home() {
   const profile = useStore(profileStore);
   const { dailyQuote } = useStore(settingsStore);
+  const journey = useStore(journeyStore);
+  const checkedInToday = journey.checkInDate === todayKey();
   const quote = quoteForDate(new Date());
   const rec = getSession("mindful-breathing")!;
   const [promptIdx, setPromptIdx] = useState(0);
@@ -47,6 +49,32 @@ function Home() {
         {dailyQuote && (<blockquote className="mt-4 max-w-xl font-serif text-xl italic text-muted-foreground">
           “{quote.text}”
         </blockquote>)}
+      </section>
+
+      <section className="surface-card p-6" aria-labelledby="checkin">
+        <div className="flex items-center justify-between gap-3">
+          <h2 id="checkin" className="text-2xl">How do you feel today?</h2>
+          {checkedInToday && <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">Checked in</span>}
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6" role="group" aria-label="Select your mood">
+          {moodOptions.map((m) => {
+            const active = checkedInToday && journey.mood === m.id;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => journeyStore.set((j) => ({ ...j, checkInDate: todayKey(), mood: m.id }))}
+                className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-colors ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:bg-accent"}`}
+              >
+                {m.label}
+              </button>
+            );
+          })}
+        </div>
+        <Button asChild variant="outline" className="mt-4">
+          <Link to="/recommendations"><Sparkles /> See practices for your mood</Link>
+        </Button>
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">

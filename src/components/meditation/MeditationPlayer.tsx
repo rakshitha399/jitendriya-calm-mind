@@ -5,8 +5,8 @@ import { LotusMark } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { fmt, useCountdown } from "@/hooks/use-countdown";
-import type { Session } from "@/lib/content";
-import { recordSession } from "@/lib/store";
+import { moodOptions, type Mood, type Session } from "@/lib/content";
+import { recordCompletion, recordSession, setCompletionMood } from "@/lib/store";
 
 const SKIP = 15;
 
@@ -19,10 +19,19 @@ export function MeditationPlayer({ session }: { session: Session }) {
   const [audioError, setAudioError] = useState(false);
   const hasAudio = Boolean(session.audioUrl) && !audioError;
 
+  const [moodAfter, setMoodAfter] = useState<Mood | null>(null);
+  const completionIdRef = useRef<string | null>(null);
+
   const t = useCountdown(total, () => {
     setComplete(true);
     recordSession(session.durationMin);
+    completionIdRef.current = recordCompletion({ sessionId: session.id, title: session.title, durationMin: session.durationMin, moodAfter: null });
   });
+
+  const saveMood = (mood: Mood) => {
+    setMoodAfter(mood);
+    if (completionIdRef.current) setCompletionMood(completionIdRef.current, mood);
+  };
 
   useEffect(() => {
     const a = audioRef.current;
@@ -55,9 +64,28 @@ export function MeditationPlayer({ session }: { session: Session }) {
         </div>
         <h1 className="mt-8 text-5xl">Well done</h1>
         <p className="mt-3 max-w-sm text-muted-foreground">You gave yourself {session.durationMin} quiet minutes. Notice how you feel right now.</p>
+        <div className="mt-6 w-full max-w-sm" aria-label="Post-practice mood check-in">
+          <p className="text-sm font-semibold">How do you feel now? <span className="font-normal text-muted-foreground">(optional)</span></p>
+          <div className="mt-3 flex flex-wrap justify-center gap-2" role="group">
+            {moodOptions.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                aria-pressed={moodAfter === m.id}
+                onClick={() => saveMood(m.id)}
+                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${moodAfter === m.id ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:bg-accent"}`}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-muted-foreground" aria-live="polite">
+            {moodAfter ? "Practice and mood saved to your journey." : "Practice saved — add a mood if you like."}
+          </p>
+        </div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild><Link to="/journal" search={{ new: true }}><BookOpen /> Reflect in journal</Link></Button>
-          <Button variant="outline" onClick={() => { setComplete(false); t.restart(); }}><Undo2 /> Again</Button>
+          <Button variant="outline" onClick={() => { setComplete(false); setMoodAfter(null); completionIdRef.current = null; t.restart(); }}><Undo2 /> Again</Button>
           <Button asChild variant="ghost"><Link to="/home">Back home</Link></Button>
         </div>
       </div>
