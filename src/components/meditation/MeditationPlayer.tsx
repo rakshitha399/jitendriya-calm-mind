@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { fmt, useCountdown } from "@/hooks/use-countdown";
 import { moodOptions, type Mood, type Session } from "@/lib/content";
-import { recordCompletion, recordSession } from "@/lib/store";
+import { recordCompletion, recordSession, setCompletionMood } from "@/lib/store";
 
 const SKIP = 15;
 
@@ -72,7 +72,7 @@ export function MeditationPlayer({ session }: { session: Session }) {
                 key={m.id}
                 type="button"
                 aria-pressed={moodAfter === m.id}
-                onClick={() => saveCompletion(m.id)}
+                onClick={() => saveMood(m.id)}
                 className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${moodAfter === m.id ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:bg-accent"}`}
               >
                 {m.label}
@@ -80,7 +80,7 @@ export function MeditationPlayer({ session }: { session: Session }) {
             ))}
           </div>
           <p className="mt-2 text-xs text-muted-foreground" aria-live="polite">
-            {saved ? "Practice saved to your journey." : "Selecting a mood saves this practice to your journey."}
+            {moodAfter ? "Practice and mood saved to your journey." : "Practice saved — add a mood if you like."}
           </p>
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
