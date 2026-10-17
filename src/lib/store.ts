@@ -158,8 +158,13 @@ export interface Completion {
   moodAfter: Mood | null;
 }
 export const completionsStore = createStore<Completion[]>("jitendriya.completions.v1", []);
-export const recordCompletion = (c: Omit<Completion, "id" | "completedAt">) =>
-  completionsStore.set((l) => [{ ...c, id: crypto.randomUUID(), completedAt: Date.now() }, ...l]);
+export const recordCompletion = (c: Omit<Completion, "id" | "completedAt">) => {
+  const id = crypto.randomUUID();
+  completionsStore.set((l) => [{ ...c, id, completedAt: Date.now() }, ...l]);
+  return id;
+};
+export const setCompletionMood = (id: string, moodAfter: Mood) =>
+  completionsStore.set((l) => l.map((c) => (c.id === id ? { ...c, moodAfter } : c)));
 
 /* ---------- Settings ---------- */
 export interface Settings {

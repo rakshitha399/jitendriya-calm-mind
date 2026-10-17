@@ -20,18 +20,17 @@ export function MeditationPlayer({ session }: { session: Session }) {
   const hasAudio = Boolean(session.audioUrl) && !audioError;
 
   const [moodAfter, setMoodAfter] = useState<Mood | null>(null);
-  const [saved, setSaved] = useState(false);
+  const completionIdRef = useRef<string | null>(null);
 
   const t = useCountdown(total, () => {
     setComplete(true);
     recordSession(session.durationMin);
+    completionIdRef.current = recordCompletion({ sessionId: session.id, title: session.title, durationMin: session.durationMin, moodAfter: null });
   });
 
-  const saveCompletion = (mood: Mood | null) => {
-    if (saved) return;
-    setSaved(true);
+  const saveMood = (mood: Mood) => {
     setMoodAfter(mood);
-    recordCompletion({ sessionId: session.id, title: session.title, durationMin: session.durationMin, moodAfter: mood });
+    if (completionIdRef.current) setCompletionMood(completionIdRef.current, mood);
   };
 
   useEffect(() => {
