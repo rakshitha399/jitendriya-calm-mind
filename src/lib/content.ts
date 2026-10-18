@@ -6,8 +6,14 @@ import heroSunrise from "@/assets/hero-sunrise.jpg";
 import lake from "@/assets/lake-breathing.jpg";
 import lotus from "@/assets/lotus.jpg";
 import forest from "@/assets/forest-dawn.jpg";
+import lakeSunset from "@/assets/lake-sunset-letgo.jpg";
+import forestSunbeams from "@/assets/forest-sunbeams.jpg";
+import birdsBranch from "@/assets/birds-branch.jpg";
+import journalFlowers from "@/assets/journal-flowers.jpg";
+import sunriseMountains from "@/assets/sunrise-mountains.jpg";
+import lotusPond from "@/assets/lotus-pond.jpg";
 
-export const images = { heroSunrise, lake, lotus, forest };
+export const images = { heroSunrise, lake, lotus, forest, lakeSunset, forestSunbeams, birdsBranch, journalFlowers, sunriseMountains, lotusPond };
 
 export type Category = "meditation" | "mantras" | "breathing" | "relaxation";
 export type Difficulty = "Beginner" | "Intermediate" | "All levels";
