@@ -6,8 +6,14 @@ import heroSunrise from "@/assets/hero-sunrise.jpg";
 import lake from "@/assets/lake-breathing.jpg";
 import lotus from "@/assets/lotus.jpg";
 import forest from "@/assets/forest-dawn.jpg";
+import lakeSunset from "@/assets/lake-sunset-letgo.jpg";
+import forestSunbeams from "@/assets/forest-sunbeams.jpg";
+import birdsBranch from "@/assets/birds-branch.jpg";
+import journalFlowers from "@/assets/journal-flowers.jpg";
+import sunriseMountains from "@/assets/sunrise-mountains.jpg";
+import lotusPond from "@/assets/lotus-pond.jpg";
 
-export const images = { heroSunrise, lake, lotus, forest };
+export const images = { heroSunrise, lake, lotus, forest, lakeSunset, forestSunbeams, birdsBranch, journalFlowers, sunriseMountains, lotusPond };
 
 export type Category = "meditation" | "mantras" | "breathing" | "relaxation";
 export type Difficulty = "Beginner" | "Intermediate" | "All levels";
@@ -68,7 +74,7 @@ export const sessions: Session[] = [
     durationMin: 10,
     difficulty: "Beginner",
     category: "breathing",
-    image: lake,
+    image: forestSunbeams,
     moods: ["anxious", "restless"],
     goals: ["focus", "stress"],
   },
@@ -83,7 +89,7 @@ export const sessions: Session[] = [
     durationMin: 10,
     difficulty: "Beginner",
     category: "meditation",
-    image: lotus,
+    image: lotusPond,
     moods: ["low", "calm", "grateful"],
     goals: ["gratitude", "energy"],
   },
@@ -125,7 +131,7 @@ export const sessions: Session[] = [
     durationMin: 20,
     difficulty: "All levels",
     category: "relaxation",
-    image: lake,
+    image: lakeSunset,
     moods: ["tired", "anxious"],
     goals: ["sleep", "stress"],
   },
@@ -153,7 +159,7 @@ export const sessions: Session[] = [
     durationMin: 12,
     difficulty: "Intermediate",
     category: "meditation",
-    image: heroSunrise,
+    image: birdsBranch,
     moods: ["low", "grateful"],
     goals: ["self-compassion", "gratitude"],
   },
@@ -167,7 +173,7 @@ export const sessions: Session[] = [
     durationMin: 8,
     difficulty: "Intermediate",
     category: "mantras",
-    image: heroSunrise,
+    image: sunriseMountains,
     moods: ["calm", "low"],
     goals: ["focus", "energy"],
   },
@@ -208,12 +214,12 @@ export interface ExploreCategory {
 }
 
 export const exploreCategories: ExploreCategory[] = [
-  { id: "meditation", title: "Meditation", description: "Settle the mind with guided sits.", image: lake, to: { kind: "recommendations", filter: "meditation" } },
-  { id: "breathing", title: "Breathing exercises", description: "Simple rhythms to calm and focus.", image: forest, to: { kind: "recommendations", filter: "breathing" } },
-  { id: "yoga", title: "Yoga & relaxation", description: "Gentle movement to release tension.", image: heroSunrise, to: { kind: "recommendations", filter: "relaxation" } },
-  { id: "mantras", title: "Mantras & spiritual practice", description: "Chant, repeat and rest in sound.", image: lotus, to: { kind: "recommendations", filter: "mantras" } },
-  { id: "wisdom", title: "Daily wisdom", description: "Short reflections for each day.", image: lotus, to: { kind: "wisdom" } },
-  { id: "mindfulness", title: "Guided mindfulness", description: "Browse every guided session.", image: forest, to: { kind: "meditation" } },
+  { id: "meditation", title: "Meditation", description: "Settle the mind with guided sits.", image: lakeSunset, to: { kind: "recommendations", filter: "meditation" } },
+  { id: "breathing", title: "Breathing exercises", description: "Simple rhythms to calm and focus.", image: forestSunbeams, to: { kind: "recommendations", filter: "breathing" } },
+  { id: "yoga", title: "Yoga & relaxation", description: "Gentle movement to release tension.", image: sunriseMountains, to: { kind: "recommendations", filter: "relaxation" } },
+  { id: "mantras", title: "Mantras & spiritual practice", description: "Chant, repeat and rest in sound.", image: lotusPond, to: { kind: "recommendations", filter: "mantras" } },
+  { id: "wisdom", title: "Daily wisdom", description: "Short reflections for each day.", image: journalFlowers, to: { kind: "wisdom" } },
+  { id: "mindfulness", title: "Guided mindfulness", description: "Browse every guided session.", image: birdsBranch, to: { kind: "meditation" } },
 ];
 
 export const sampleUser = {
