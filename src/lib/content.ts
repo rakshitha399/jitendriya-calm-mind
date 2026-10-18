@@ -214,12 +214,12 @@ export interface ExploreCategory {
 }
 
 export const exploreCategories: ExploreCategory[] = [
-  { id: "meditation", title: "Meditation", description: "Settle the mind with guided sits.", image: lake, to: { kind: "recommendations", filter: "meditation" } },
-  { id: "breathing", title: "Breathing exercises", description: "Simple rhythms to calm and focus.", image: forest, to: { kind: "recommendations", filter: "breathing" } },
-  { id: "yoga", title: "Yoga & relaxation", description: "Gentle movement to release tension.", image: heroSunrise, to: { kind: "recommendations", filter: "relaxation" } },
-  { id: "mantras", title: "Mantras & spiritual practice", description: "Chant, repeat and rest in sound.", image: lotus, to: { kind: "recommendations", filter: "mantras" } },
-  { id: "wisdom", title: "Daily wisdom", description: "Short reflections for each day.", image: lotus, to: { kind: "wisdom" } },
-  { id: "mindfulness", title: "Guided mindfulness", description: "Browse every guided session.", image: forest, to: { kind: "meditation" } },
+  { id: "meditation", title: "Meditation", description: "Settle the mind with guided sits.", image: lakeSunset, to: { kind: "recommendations", filter: "meditation" } },
+  { id: "breathing", title: "Breathing exercises", description: "Simple rhythms to calm and focus.", image: forestSunbeams, to: { kind: "recommendations", filter: "breathing" } },
+  { id: "yoga", title: "Yoga & relaxation", description: "Gentle movement to release tension.", image: sunriseMountains, to: { kind: "recommendations", filter: "relaxation" } },
+  { id: "mantras", title: "Mantras & spiritual practice", description: "Chant, repeat and rest in sound.", image: lotusPond, to: { kind: "recommendations", filter: "mantras" } },
+  { id: "wisdom", title: "Daily wisdom", description: "Short reflections for each day.", image: journalFlowers, to: { kind: "wisdom" } },
+  { id: "mindfulness", title: "Guided mindfulness", description: "Browse every guided session.", image: birdsBranch, to: { kind: "meditation" } },
 ];
 
 export const sampleUser = {
