@@ -166,6 +166,20 @@ export const recordCompletion = (c: Omit<Completion, "id" | "completedAt">) => {
 export const setCompletionMood = (id: string, moodAfter: Mood) =>
   completionsStore.set((l) => l.map((c) => (c.id === id ? { ...c, moodAfter } : c)));
 
+/* ---------- Daily Sankalpa (saved intentions) ---------- */
+export interface Intention {
+  id: string;
+  text: string;
+  value: string;
+  date: string; // yyyy-mm-dd
+}
+export const intentionsStore = createStore<Intention[]>("jitendriya.intentions.v1", []);
+export const saveIntention = (text: string, value: string) => {
+  const id = crypto.randomUUID();
+  intentionsStore.set((l) => [{ id, text, value, date: todayKey() }, ...l]);
+  return id;
+};
+
 /* ---------- Settings ---------- */
 export interface Settings {
   theme: "light" | "dark" | "system";
