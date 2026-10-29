@@ -4,7 +4,9 @@ import { useState } from "react";
 import { ProgressRing, SampleBadge, SectionHeading } from "@/components/common/ui";
 import { Button } from "@/components/ui/button";
 import { getSession, moodOptions, quoteForDate, reflectionPrompts, sampleUser } from "@/lib/content";
-import { journeyStore, profileStore, settingsStore, todayKey, useStore } from "@/lib/store";
+import { journeyStore, settingsStore, todayKey, useStore } from "@/lib/store";
+import { useAuth } from "@/hooks/use-auth";
+import { userDisplayName } from "@/lib/auth";
 
 export const Route = createFileRoute("/_main/home")({
   head: () => ({
@@ -31,7 +33,7 @@ function greeting() {
 }
 
 function Home() {
-  const profile = useStore(profileStore);
+  const { user } = useAuth();
   const { dailyQuote } = useStore(settingsStore);
   const journey = useStore(journeyStore);
   const checkedInToday = journey.checkInDate === todayKey();
@@ -44,7 +46,7 @@ function Home() {
       <section className="fade-up">
         <p className="text-muted-foreground" suppressHydrationWarning>{greeting()},</p>
         <h1 className="mt-1 flex items-center gap-2 text-5xl">
-          {profile.name} <Sprout className="h-7 w-7 text-sage" aria-hidden />
+          {userDisplayName(user)} <Sprout className="h-7 w-7 shrink-0 text-sage" aria-hidden />
         </h1>
         {dailyQuote && (<blockquote className="mt-4 max-w-xl font-serif text-xl italic text-muted-foreground">
           “{quote.text}”

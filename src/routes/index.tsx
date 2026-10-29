@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { LotusMark } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { images } from "@/lib/content";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Welcome() {
+  const { user, loading } = useAuth();
   return (
     <div className="relative grid min-h-[100svh] place-items-center overflow-hidden bg-forest text-forest-foreground">
       <img src={images.heroSunrise} alt="A person meditating on a rock above misty mountains at sunrise" width={1024} height={1536} className="absolute inset-0 h-full w-full object-cover" />
@@ -30,8 +32,8 @@ function Welcome() {
         <div className="fade-up">
           <p className="font-serif text-2xl leading-snug sm:text-3xl">Your personal spiritual wellbeing & mindfulness companion</p>
           <p className="mx-auto mt-3 max-w-sm text-sm opacity-85">Gentle meditations, quiet reflection and small daily practices — at your own pace.</p>
-          <Button asChild variant="hero" size="lg" className="mt-8">
-            <Link to="/home">Get Started <ArrowRight /></Link>
+          <Button asChild variant="hero" size="lg" className="mt-8" disabled={loading}>
+            <Link to={user ? "/home" : "/login"} search={user ? {} : { redirect: "/home" }} aria-disabled={loading} onClick={e => { if (loading) e.preventDefault(); }}>{loading ? "Please wait…" : "Get Started"} <ArrowRight /></Link>
           </Button>
         </div>
       </div>

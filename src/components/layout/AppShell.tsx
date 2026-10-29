@@ -3,6 +3,7 @@ import { Settings } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { navItems } from "./nav";
+import { LogoutButton } from "@/components/common/LogoutButton";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -28,6 +29,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </Link>
           ))}
         </nav>
+        <LogoutButton className="mb-4 justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" />
         <p className="px-2 text-xs opacity-70">Small steps. Big inner changes.</p>
       </aside>
 

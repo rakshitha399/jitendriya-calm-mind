@@ -5,7 +5,7 @@
  * data is stored in Supabase (table: chanting_sessions).
  * Otherwise it falls back to the local browser mock.
  */
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import {
   addDays, computeStats, dateKey, mantras,
   type ChantingSession, type ChantingStats, type CounterState, type NewChanting,
@@ -14,9 +14,6 @@ import {
 // Kept so any other file importing it still works. Not used anymore.
 export const API_BASE_URL = "";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
-const supabase = SUPABASE_URL && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 // Convert a database row (snake_case) into the app's ChantingSession shape
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
