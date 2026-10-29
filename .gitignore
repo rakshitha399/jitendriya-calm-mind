@@ -30,3 +30,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment variables (keys)
+.env
+.env.*
+!.env.example
+
+# Local backend data (old Express server)
+server/data.json

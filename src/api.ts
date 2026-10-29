@@ -1,18 +1,36 @@
 /**
  * Chanting data access — the ONLY place the UI gets chanting data from.
  *
- * Set API_BASE_URL (e.g. "https://api.example.com") to switch from the local
- * mock to a real backend exposing:
- *   POST   {base}/chanting          body: NewChanting  -> ChantingSession
- *   GET    {base}/chanting/progress                    -> Progress
- *   DELETE {base}/chanting/{id}
+ * If VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY are set in .env,
+ * data is stored in Supabase (table: chanting_sessions).
+ * Otherwise it falls back to the local browser mock.
  */
+import { createClient } from "@supabase/supabase-js";
 import {
   addDays, computeStats, dateKey, mantras,
   type ChantingSession, type ChantingStats, type CounterState, type NewChanting,
 } from "@/lib/chanting";
 
+// Kept so any other file importing it still works. Not used anymore.
 export const API_BASE_URL = "";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+const supabase = SUPABASE_URL && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// Convert a database row (snake_case) into the app's ChantingSession shape
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const fromRow = (r: any): ChantingSession => ({
+  id: r.id,
+  mantraId: r.mantra_id,
+  mantraName: r.mantra_name,
+  target: r.target,
+  chants: r.chants,
+  durationSec: r.duration_sec,
+  savedAt: new Date(r.saved_at).toISOString(),
+  date: r.date,
+  isDemo: false,
+});
 
 export interface Progress {
   sessions: ChantingSession[];
@@ -75,7 +93,7 @@ export function buildDemoSessions(now: Date = new Date()): ChantingSession[] {
   return out;
 }
 
-/* ---------- Mock implementation ---------- */
+/* ---------- Mock implementation (used when Supabase is not configured) ---------- */
 const mock = {
   save(input: NewChanting): ChantingSession {
     const at = input.savedAt ?? new Date();
@@ -100,27 +118,43 @@ const mock = {
   },
 };
 
-async function http<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, { headers: { "Content-Type": "application/json" }, ...init });
-  if (!res.ok) throw new Error(`Request failed (${res.status})`);
-  return (res.status === 204 ? undefined : await res.json()) as T;
-}
-
 /* ---------- Public API ---------- */
 export async function saveChanting(input: NewChanting): Promise<ChantingSession> {
   if (!Number.isInteger(input.chants) || input.chants <= 0) throw new Error("Cannot save zero chants.");
-  if (API_BASE_URL) return http("/chanting", { method: "POST", body: JSON.stringify(input) });
-  return mock.save(input);
+  if (!supabase) return mock.save(input);
+  const at = input.savedAt ?? new Date();
+  const { data, error } = await supabase
+    .from("chanting_sessions")
+    .insert({
+      mantra_id: input.mantraId,
+      mantra_name: input.mantraName,
+      target: input.target,
+      chants: input.chants,
+      duration_sec: input.durationSec,
+      saved_at: at.toISOString(),
+      date: dateKey(at),
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return fromRow(data);
 }
 
 export async function getProgress(): Promise<Progress> {
-  if (API_BASE_URL) return http("/chanting/progress");
-  return mock.progress();
+  if (!supabase) return mock.progress();
+  const { data, error } = await supabase
+    .from("chanting_sessions")
+    .select("*")
+    .order("saved_at", { ascending: false });
+  if (error) throw new Error(error.message);
+  const sessions = (data ?? []).map(fromRow);
+  return { sessions, stats: computeStats(sessions) };
 }
 
 export async function deleteChanting(id: string): Promise<void> {
-  if (API_BASE_URL) return http(`/chanting/${encodeURIComponent(id)}`, { method: "DELETE" });
-  mock.remove(id);
+  if (!supabase) return mock.remove(id);
+  const { error } = await supabase.from("chanting_sessions").delete().eq("id", id);
+  if (error) throw new Error(error.message);
 }
 
 /* ---------- Local device preferences & unfinished draft ---------- */
