@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MainRouteImport } from './routes/_main'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MainExploreRouteImport } from './routes/_main.explore'
 import { Route as MainHomeRouteImport } from './routes/_main.home'
 import { Route as MainJournalRouteImport } from './routes/_main.journal'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const MainRoute = MainRouteImport.update({
   id: '/_main',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MainExploreRoute = MainExploreRouteImport.update({
@@ -96,6 +102,7 @@ const MainMeditationIdRoute = MainMeditationIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
   '/journal': typeof MainJournalRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/explore': typeof MainExploreRoute
   '/home': typeof MainHomeRoute
   '/journal': typeof MainJournalRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_main': typeof MainRouteWithChildren
+  '/login': typeof LoginRoute
   '/_main/explore': typeof MainExploreRoute
   '/_main/home': typeof MainHomeRoute
   '/_main/journal': typeof MainJournalRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
     | '/explore'
     | '/home'
     | '/journal'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
     | '/explore'
     | '/home'
     | '/journal'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_main'
+    | '/login'
     | '/_main/explore'
     | '/_main/home'
     | '/_main/journal'
@@ -193,6 +205,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MainRoute: typeof MainRouteWithChildren
+  LoginRoute: typeof LoginRoute
   PlayIdRoute: typeof PlayIdRoute
 }
 
@@ -210,6 +223,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof MainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_main/explore': {
@@ -332,6 +352,7 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MainRoute: MainRouteWithChildren,
+  LoginRoute: LoginRoute,
   PlayIdRoute: PlayIdRoute,
 }
 export const routeTree = rootRouteImport
