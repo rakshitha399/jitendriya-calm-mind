@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
+import { LogoutButton } from "@/components/common/LogoutButton";
 import { goalOptions, images, sampleUser } from "@/lib/content";
 import { activityStore, goalsRepo, goalsStore, journalStore, profileStore, useStore, type PracticeGoal, type Profile } from "@/lib/store";
 
@@ -111,6 +112,7 @@ function ProfilePage() {
         <Link to="/meditation" className="mt-4 inline-block text-sm font-semibold text-primary hover:underline">Start a session →</Link>
       </section>
 
+      <LogoutButton className="text-primary" />
       <EditProfile open={editOpen} onOpenChange={setEditOpen} profile={profile} />
 
       <Dialog open={!!goalDraft} onOpenChange={(o) => !o && setGoalDraft(null)}>
